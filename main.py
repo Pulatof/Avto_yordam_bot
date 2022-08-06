@@ -237,6 +237,43 @@ async def avtostaxovaniya(message: Message):
         pass
 
 
+@dp.message_handler(Text(equals=["Avto ehtiyot qismlar", "Автозапчасти"]))
+async def zapchas(message: Message):
+    try:
+        db.update_user_state("Zapchas", message.from_user.id)
+        user_state = db.get_user_state(message.from_user.id)
+
+        if user_state[1] == "uz":
+            zapchas = db.select_all_evakuatr("uz")
+            zapchas_keyboard = []
+            zapchas_keyboard.append([KeyboardButton(text="Asosiy menu 🏠")])
+            for zap in zapchas:
+                zapchas_keyboard.append([KeyboardButton(text=zap[0])])
+            zapchas_keyboard.append([KeyboardButton(text="Asosiy menu 🏠")])
+
+            evokuatsiya_uz = ReplyKeyboardMarkup(
+                keyboard=zapchas_keyboard, resize_keyboard=True
+            )
+            await message.answer("Ushbu bo'lim yaqin kunlarda ishga tushadi va siz o'zingizga kerakli bo'lgan ehtiyot qismlarni shu bo'lim orqali qidirib topishingiz mumkin",
+                                 reply_markup=zapchas_uz)
+        else:
+            zapchas = db.select_all_evakuatr("ru")
+            zapchas_keyboard = []
+            zapchas_keyboard.append([KeyboardButton(text="Главный меню 🏠")])
+            for zap in zapchas:
+                zapchas_keyboard.append([KeyboardButton(text=zap[0])])
+            zapchas_keyboard.append([KeyboardButton(text="Главный меню 🏠")])
+
+            evokuatsiya_ru = ReplyKeyboardMarkup(
+                keyboard=zapchas_keyboard, resize_keyboard=True
+            )
+            await message.answer(
+                "Этот раздел будет запущен в ближайшие дни и через него вы сможете искать нужные вам автозапчасти.",
+                reply_markup=zapchas_ru)
+
+    except:
+        pass
+
 #
 @dp.message_handler(Text(equals=["Evakuator", "Эвакуатор"]))
 async def evokuatsiya(message: Message):

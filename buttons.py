@@ -43,6 +43,11 @@ main_menu_ru = ReplyKeyboardMarkup(
     ], resize_keyboard=True
 )
 
+zapchas_uz = ReplyKeyboardMarkup(
+    keyboard=[ [KeyboardButton(text="Asosiy menu 🏠")] ], resize_keyboard=True )
+
+zapchas_ru = ReplyKeyboardMarkup(
+    keyboard=[ [KeyboardButton(text="Главный меню 🏠")] ], resize_keyboard=True )
 
 zapravka_uz = ReplyKeyboardMarkup(
     keyboard=[
